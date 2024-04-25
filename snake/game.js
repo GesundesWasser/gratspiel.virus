@@ -1,6 +1,4 @@
-// Snake Game
-
-console.log("Codename Weh👊Wago Loaded!");
+console.log("Snake Loaded!");
 
 document.addEventListener("DOMContentLoaded", function() {
     const board = document.getElementById("game-board");
@@ -113,7 +111,11 @@ document.addEventListener("DOMContentLoaded", function() {
             draw();
             setTimeout(gameLoop, speed);
         } else {
+            console.log(score);
+            localStorage.setItem("gameover", true);
             alert("Game over!");
+            const accountscore = parseInt(localStorage.getItem("accountscore")); // Convert to number
+            var higherScore = compareScores(score, accountscore);
         }
     }
 
@@ -121,4 +123,13 @@ document.addEventListener("DOMContentLoaded", function() {
     newGameBtn.addEventListener("click", startGame);
 });
 
-// Weh👊Wago!
+function compareScores(score, accountscore) {
+    if (score > accountscore) {
+        localStorage.setItem("newhighscore", score);
+        alert("New Highscore!")
+        window.location.reload(true)
+        return score;
+    } else {
+        return accountscore;
+    }
+}
