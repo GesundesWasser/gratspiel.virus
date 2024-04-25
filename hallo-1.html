@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pac-Man</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: black;
+  }
+  #game-container {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .entity {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: yellow;
+  }
+  #pacman {
+    background-color: yellow;
+    z-index: 2;
+  }
+  .ghost {
+    background-color: red;
+  }
+  .obstacle {
+    background-color: blue;
+  }
+</style>
+</head>
+<body>
+<div id="game-container">
+  <div id="pacman" class="entity"></div>
+  <div id="ghost1" class="entity ghost"></div>
+  <div id="ghost2" class="entity ghost"></div>
+  <div id="ghost3" class="entity ghost"></div>
+  <div id="obstacle1" class="entity obstacle" style="top: 100px; left: 200px;"></div>
+  <div id="obstacle2" class="entity obstacle" style="top: 300px; left: 300px;"></div>
+</div>
+<script>
+  const pacman = document.getElementById('pacman');
+  const ghosts = document.querySelectorAll('.ghost');
+  const obstacles = document.querySelectorAll('.obstacle');
+  const step = 5;
+
+  document.addEventListener('keydown', function(event) {
+    let left = parseInt(window.getComputedStyle(pacman).getPropertyValue('left'));
+    let top = parseInt(window.getComputedStyle(pacman).getPropertyValue('top'));
+
+    switch(event.key) {
+      case "ArrowLeft":
+        left -= step;
+        break;
+      case "ArrowRight":
+        left += step;
+        break;
+      case "ArrowUp":
+        top -= step;
+        break;
+      case "ArrowDown":
+        top += step;
+        break;
+    }
+
+    // Collision detection with obstacles
+    obstacles.forEach(obstacle => {
+      if (collision(pacman, obstacle)) {
+        switch(event.key) {
+          case "ArrowLeft":
+            left = Math.max(left, parseInt(window.getComputedStyle(obstacle).getPropertyValue('left')) + 30);
+            break;
+          case "ArrowRight":
+            left = Math.min(left, parseInt(window.getComputedStyle(obstacle).getPropertyValue('left')) - 30);
+            break;
+          case "ArrowUp":
+            top = Math.max(top, parseInt(window.getComputedStyle(obstacle).getPropertyValue('top')) + 30);
+            break;
+          case "ArrowDown":
+            top = Math.min(top, parseInt(window.getComputedStyle(obstacle).getPropertyValue('top')) - 30);
+            break;
+        }
+      }
+    });
+
+    pacman.style.left = left + 'px';
+    pacman.style.top = top + 'px';
+  });
+
+  function collision(entity1, entity2) {
+    const rect1 = entity1.getBoundingClientRect();
+    const rect2 = entity2.getBoundingClientRect();
+    return !(rect1.right < rect2.left || 
+             rect1.left > rect2.right || 
+             rect1.bottom < rect2.top || 
+             rect1.top > rect2.bottom);
+  }
+</script>
+</body>
+</html>
