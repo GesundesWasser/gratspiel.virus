@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kapselordnung</title>
     <link rel="stylesheet" href="styles.css">
+    <script type="module" defer src="/accounts.js"></script>
 </head>
 <body>
 
@@ -13,11 +14,10 @@
 <p id="highscore"></p>
 <button onclick="logout()">Logout</button>
 <button onclick="window.location.href='snake/'">ICH WILL SCHLANGE!</button>
-<script defer src="/accounts.js"></script>
 
 <script>
 function logout() {
-  // Remove the token from localStorage (or sessionStorage, depending on where it's stored)
+  // Remove the token from localStorage
   localStorage.removeItem("token");
   // Redirect the user to the login page
   window.location.href = "login.html";
