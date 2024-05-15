@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPS Messgerät</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    #clickArea {
+        padding: 20px;
+        background-color: #f0f0f0;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 24px;
+    }
+</style>
+</head>
+<body>
+<h1>Klicks pro Sekunde Messgerät</h1>
+<p>Klicke auf den Button, um deine Klicks pro Sekunde zu messen:</p>
+<div id="clickArea">Klicke hier</div>
+<p id="cpsDisplay">Deine CPS: <span id="cps">0</span></p>
+
+<script>
+    var clickCount = 0;
+    var startTime, endTime;
+
+    function startTimer() {
+        startTime = new Date();
+        document.getElementById("clickArea").innerHTML = "Klicke so schnell wie möglich!";
+        document.getElementById("cps").innerHTML = 0;
+        clickCount = 0;
+        document.getElementById("clickArea").removeEventListener("click", startTimer);
+        document.getElementById("clickArea").addEventListener("click", countClick);
+    }
+
+    function countClick() {
+        clickCount++;
+        document.getElementById("cps").innerHTML = clickCount / ((new Date() - startTime) / 1000);
+    }
+
+    document.getElementById("clickArea").addEventListener("click", startTimer);
+</script>
+</body>
+</html>
