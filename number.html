@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapselordnung</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet"/>
+    <style>
+        /* Light Mode Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        button:hover {
+            background-color: #ddd;
+        }
+        
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #333;
+            color: #f0f0f0;
+        }
+        body.dark-mode .container {
+            background-color: #444;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        body.dark-mode input {
+            background-color: #555;
+            color: #f0f0f0;
+            border: 1px solid #666;
+        }
+        body.dark-mode button {
+            background-color: #666;
+            color: #f0f0f0;
+            border: 1px solid #777;
+        }
+        body.dark-mode button:hover {
+            background-color: #555;
+            border: 1px solid #666;
+        }
+        img {
+            height: 150px;
+            width: 250px;
+        }
+        /* Dark/Light Mode Toggle Icon */
+        .mode-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            color: #333;
+            transition: color 0.3s;
+        }
+        body.dark-mode .mode-toggle {
+            color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/site"><img src="https://download.scamcraft.net/img/gratspiel-logo.png"></a>
+        <i class="fas fa-moon mode-toggle" id="modeToggle"></i> <!-- Dark Mode Icon -->
+        <h1>Guess the Number Game</h1>
+        <p>Guess a number between 1 and 10.</p>
+        <input type="number" id="guess" min="1" max="10" placeholder="Enter your guess">
+        <button id="submitGuess">Submit Guess</button>
+        <p id="resultMessage"></p>
+        <button id="playAgain" style="display:none">Play Again</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chance@1.1.8/dist/chance.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            let secretNumber = chance.integer({ min: 1, max: 10 });
+            let attemptCount = 0;
+            const maxAttempts = 3;
+
+            // Mode toggle logic
+            $('#modeToggle').click(function() {
+                $('body').toggleClass('dark-mode');
+                if ($('body').hasClass('dark-mode')) {
+                    $('#modeToggle').removeClass('fa-moon').addClass('fa-sun');
+                    localStorage.setItem('darkMode', 'true');
+                } else {
+                    $('#modeToggle').removeClass('fa-sun').addClass('fa-moon');
+                    localStorage.setItem('darkMode', 'false');
+                }
+            });
+
+            // Check for saved mode in localStorage
+            if (localStorage.getItem('darkMode') === 'true') {
+                $('body').addClass('dark-mode');
+                $('#modeToggle').removeClass('fa-moon').addClass('fa-sun');
+            } else {
+                $('body').removeClass('dark-mode');
+                $('#modeToggle').removeClass('fa-sun').addClass('fa-moon');
+            }
+
+            $("#submitGuess").click(function() {
+                const guess = parseInt($("#guess").val(), 10);
+
+                if (isNaN(guess) || guess < 1 || guess > 10) {
+                    $("#resultMessage").text("Please enter a number between 1 and 10.");
+                } else {
+                    attemptCount++;
+                    let attemptsLeft = maxAttempts - attemptCount;
+
+                    if (guess === secretNumber) {
+                        $("#resultMessage").text(`Congratulations! You guessed the number ${secretNumber} in ${attemptCount} attempts.`);
+                        $("#submitGuess").hide();
+                        $("#playAgain").show();
+                    } else if (attemptCount >= maxAttempts) {
+                        $("#resultMessage").text(`Game over! You've used all ${maxAttempts} attempts. The number was ${secretNumber}.`);
+                        $("#submitGuess").hide();
+                        $("#playAgain").show();
+                    } else if (guess < secretNumber) {
+                        $("#resultMessage").text(`Attempt ${attemptCount}: Too low! Try again. ${attemptsLeft} ${attemptsLeft === 1 ? 'attempt' : 'attempts'} left.`);
+                    } else {
+                        $("#resultMessage").text(`Attempt ${attemptCount}: Too high! Try again. ${attemptsLeft} ${attemptsLeft === 1 ? 'attempt' : 'attempts'} left.`);
+                    }
+                }
+            });
+
+            $("#playAgain").click(function() {
+                secretNumber = chance.integer({ min: 1, max: 10 });
+                attemptCount = 0;
+                $("#guess").val("");
+                $("#resultMessage").text("");
+                $("#submitGuess").show();
+                $("#playAgain").hide();
+                console.log("Selected Number: " + secretNumber);  // Debugger
+            });
+        });
+    </script>
+</body>
+</html>
