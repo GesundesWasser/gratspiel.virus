@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kapselordnung</title>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <!-- Font Awesome CDN -->
     <style>
         /* Light Mode Styles */
         body {
@@ -17,6 +17,10 @@
             margin: 0;
             color: #333;
             transition: background-color 0.3s, color 0.3s;
+        }
+        img {
+            height: 150px;
+            width: 250px;
         }
         .container {
             background-color: #fff;
@@ -69,10 +73,7 @@
             background-color: #555;
             border: 1px solid #666;
         }
-        img {
-            height: 150px;
-            width: 250px;
-        }
+
         /* Dark/Light Mode Toggle Icon */
         .mode-toggle {
             position: absolute;
@@ -90,8 +91,9 @@
 </head>
 <body>
     <div class="container">
-        <a href="/site"><img src="https://download.scamcraft.net/img/gratspiel-logo.png"></a>
         <i class="fas fa-moon mode-toggle" id="modeToggle"></i> <!-- Dark Mode Icon -->
+        <a href="/site"><img src="https://download.scamcraft.net/img/gratspiel-logo.png"></a>
+
         <h1>Guess the Number Game</h1>
         <p>Guess a number between 1 and 10.</p>
         <input type="number" id="guess" min="1" max="10" placeholder="Enter your guess">
@@ -160,7 +162,7 @@
                 $("#resultMessage").text("");
                 $("#submitGuess").show();
                 $("#playAgain").hide();
-                console.log("Selected Number: " + secretNumber);  // Debugger
+//                console.log("Selected Number: " + secretNumber);  // Be Sure to Remove it :P
             });
         });
     </script>
