@@ -1,41 +1,49 @@
-// Snake Game
+import $ from 'jquery';
 
-console.log("Codename Weh👊Wago Loaded!");
-
-document.addEventListener("DOMContentLoaded", function() {
-    const board = document.getElementById("game-board");
-    const scoreDisplay = document.getElementById("score");
-    const newGameBtn = document.getElementById("new-game-btn");
+const Game = (function () {
     const boardWidth = 20;
     const boardHeight = 20;
     const blockSize = 20;
     const speed = 100; // milliseconds
 
-    let snake = [{x: 10, y: 10}];
-    let food = {x: 15, y: 15};
+    let snake = [];
+    let food = {};
     let direction = "right";
     let gameOver = true;
     let score = 0;
 
+    const $board = $("#game-board");
+    const $scoreDisplay = $("#score");
+    const $newGameBtn = $("#new-game-btn");
+
+    function init() {
+        $newGameBtn.on("click", startGame);
+        $(document).on("keydown", handleKeyPress);
+    }
+
     function draw() {
-        board.innerHTML = "";
+        $board.empty();
         snake.forEach(segment => {
-            const div = document.createElement("div");
-            div.className = "snake";
-            div.style.left = segment.x * blockSize + "px";
-            div.style.top = segment.y * blockSize + "px";
-            board.appendChild(div);
+            $("<div>")
+                .addClass("snake")
+                .css({
+                    left: segment.x * blockSize + "px",
+                    top: segment.y * blockSize + "px"
+                })
+                .appendTo($board);
         });
 
-        const foodDiv = document.createElement("div");
-        foodDiv.className = "food";
-        foodDiv.style.left = food.x * blockSize + "px";
-        foodDiv.style.top = food.y * blockSize + "px";
-        board.appendChild(foodDiv);
+        $("<div>")
+            .addClass("food")
+            .css({
+                left: food.x * blockSize + "px",
+                top: food.y * blockSize + "px"
+            })
+            .appendTo($board);
     }
 
     function move() {
-        const head = {...snake[0]};
+        const head = { ...snake[0] };
         switch (direction) {
             case "up":
                 head.y--;
@@ -61,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (head.x === food.x && head.y === food.y) {
             generateFood();
             score++;
-            scoreDisplay.textContent = `Score: ${score}`;
+            $scoreDisplay.text(`Score: ${score}`);
         } else {
             snake.pop();
         }
@@ -98,8 +106,8 @@ document.addEventListener("DOMContentLoaded", function() {
     function startGame() {
         if (gameOver) {
             score = 0;
-            scoreDisplay.textContent = `Score: ${score}`;
-            snake = [{x: 10, y: 10}];
+            $scoreDisplay.text(`Score: ${score}`);
+            snake = [{ x: 10, y: 10 }];
             direction = "right";
             gameOver = false;
             generateFood();
@@ -117,8 +125,11 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    document.addEventListener("keydown", handleKeyPress);
-    newGameBtn.addEventListener("click", startGame);
-});
+    return {
+        init
+    };
+})();
 
-// Weh👊Wago!
+$(document).ready(function () {
+    Game.init();
+});

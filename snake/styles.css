@@ -1,82 +1,92 @@
-header,
-main,
-footer {
-    padding: 20px;
-    box-sizing: border-box;
-    max-width: 800px; /* Set your desired max-width */
-    margin: 0; /* Set margin to 0 for left alignment */
-}
-
-header img {
-    height: auto;
-    margin-right: 15px;
-    width: 225px;
-    height: 250x;
-    vertical-align: middle; /* Align the image vertically */
-}
-
-header h1 {
+/* Reset default margin and padding */
+* {
     margin: 0;
-    color: rgb(4, 190, 35);
-    display: inline-block;
-    vertical-align: middle; /* Align the text vertically */
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #2C2C2C;
+    color: #E0E0E0;
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100vh;
-    background-color: rgb(34, 34, 34);
+    justify-content: center;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header img {
+    width: 200px;
+    height: auto;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#game-container {
+    text-align: center;
 }
 
 #game-board {
     width: 400px;
     height: 400px;
-    border: 2px solid rgb(4, 190, 35);
+    border: 5px solid #4CAF50;
+    background-color: #1E1E1E;
     position: relative;
     margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+#score {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4CAF50;
+    margin-bottom: 10px;
 }
 
 button {
-    background-color: rgb(4, 190, 35);
-    color: rgb(0, 0, 0);
-    padding: 10px;
+    background-color: #4CAF50;
+    color: #FFFFFF;
+    padding: 12px 20px;
     border: none;
+    border-radius: 8px;
+    font-size: 16px;
     cursor: pointer;
-    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45A049;
 }
 
 footer {
-    color: rgb(4, 190, 35);
-    background-color: rgb(34, 34, 34); /* Add this line to set the background color of the footer */
-    padding: 10px; /* Add padding to make it visually separated from the rest */
-    text-align: center; /* Align the text center within the footer */
+    margin-top: 20px;
+    text-align: center;
+    color: #E0E0E0;
+}
+
+footer p {
+    font-size: 14px;
+    color: #B0B0B0;
 }
 
 .snake,
 .food {
     width: 20px;
     height: 20px;
-    background-color: rgb(4, 190, 35);
+    background-color: #4CAF50;
     position: absolute;
-}
-
-#section2 {
-    text-align: center; /* Center align the contents */
-}
-
-button {
-    margin-bottom: 10px; /* Optional: Add margin below the button for spacing */
-}
-
-#score {
-    margin-bottom: 10px; /* Optional: Add margin below the score for spacing */
-    font-size: 20px;
-    color: rgb(4, 190, 35);
+    border-radius: 4px; /* Rounded corners for a smoother look */
 }
 
 body::-webkit-scrollbar {
@@ -84,16 +94,10 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-thumb {
-    background-color: #444;
+    background-color: #666;
     border-radius: 6px;
 }
 
 body::-webkit-scrollbar-track {
-    background-color: transparent;
+    background-color: #333;
 }
-
-body::-webkit-scrollbar-track-piece {
-    background-color: transparent;
-}
-
-/* Weh👊Wago! */
