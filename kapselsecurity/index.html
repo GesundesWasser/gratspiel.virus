@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapselordnung</title>
+    <link rel="icon" href="https://download.scamcraft.net/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://download.scamcraft.net/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <i class="fas fa-moon mode-toggle" id="modeToggle" aria-label="Toggle dark mode"></i> <!-- Dark Mode Icon -->
+        <a href="/site"><img src="https://download.scamcraft.net/img/gratspiel-logo.png" alt="Game Logo"></a>
+
+        <h1>Guess the Number Game</h1>
+        <p>Guess a number between 1 and 10.</p>
+        <input type="number" id="guess" min="1" max="10" placeholder="Enter your guess" aria-label="Enter your guess">
+        <button id="submitGuess">Submit Guess</button>
+        <p id="resultMessage"></p>
+        <button id="playAgain" style="display:none">Play Again</button>
+    </div>
+</body>
+</html>
+
+
+<script type="module">
+    import GuessingGameModule from './game.js';
+    GuessingGameModule.initializeGame();
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account - Bad UI Showcase</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background: white;
+            color: black;
+            font-family: sans-serif;
+            user-select: none;
+            overflow: hidden;
+        }
+        * {
+            margin: 0;
+            font-weight: 200;
+        }
+        .hide {
+            display: none;
+        }
+        .alert {
+            background: black;
+            color: white;
+            border: 1px #cbcbcb solid;
+            border-radius: 7.5px;
+            padding: 15px;
+        }
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .main {
+            border: 1px black solid;
+            border-radius: 7.5px;
+            padding: 10px;
+        }
+        .box {
+            margin-top: 15px;
+            width: 400px;
+            height: 400px;
+            overflow: hidden;
+        }
+        button {
+            background: white;
+            border: 1px black solid;
+            border-radius: 5px;
+            margin-top: 15px;
+            outline: none;
+            padding: 5px;
+            color: black;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.3s;
+            z-index: -1;
+        }
+        .cup {
+            background-image: url("https://download.scamcraft.net/img/cup.png");
+            width: 128px;
+            height: 128px;
+            position: absolute;
+            transition: all 0.3s;
+        }
+        .cups_container {
+            width: 384px;
+            top: 40%;
+        }
+        .fadeout {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="center main">
+        <h1>Kapselsecurity</h1>
+        <p>To Access Codename <code>Kapselsecurity</code> you must pass the <code>Kapselsecurity</code>-Security System</p>
+        <div class="box">
+            <div class="cups_container center">
+                <div class="cup" style="left: 0px; top: 0px;"></div>
+                <div class="cup" style="left: 128px; top: 0px;">
+                    <button style="bottom: -30px;">Richtig</button>
+                </div>
+                <div class="cup" style="left: 256px; top: 0px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="center hide alert">
+        <h1></h1>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            function showAlert(message) {
+                $(".alert").removeClass("hide").find("h1").text(message);
+                setTimeout(() => $(".alert").addClass("hide"), 2500);
+            }
+
+            function arrayShuffle(arr) {
+                return arr.sort(() => Math.random() - 0.5);
+            }
+
+            function shuffleCups() {
+                $("button").addClass("fadeout").css("bottom", "0px");
+                setTimeout(() => {
+                    const positions = arrayShuffle([0, 128, 256]);
+                    $(".cup").each((index, cup) => {
+                        $(cup).css("left", `${positions[index]}px`);
+                    });
+                }, 400);
+            }
+
+            function shuffleLoop(times) {
+                $(".cup").addClass("shuffling");
+                let count = 0;
+                const interval = setInterval(() => {
+                    shuffleCups();
+                    count++;
+                    if (count === times) {
+                        clearInterval(interval);
+                        $(".cup").removeClass("shuffling");
+                    }
+                }, 700);
+            }
+
+            function moveButton() {
+                const cups = $(".cup");
+                const currentCup = $("button").closest(".cup");
+                const otherCups = cups.not(currentCup);
+                const newCup = $(otherCups.get(Math.floor(Math.random() * otherCups.length)));
+                newCup.append($("button"));
+            }
+
+            $(".cup").on("click", function () {
+                if ($(this).hasClass("shuffling")) return;
+
+                const isCorrect = !!$(this).find("button").length;
+                $(this).css("top", "-50px");
+
+                if (isCorrect) {
+                    showAlert("Wrong cup. Reloading...");
+                    setTimeout(() => location.reload(), 1000); // Reload page after 1 second
+                } else {
+                    showAlert("Wrong cup. Reloading...");
+                    setTimeout(() => location.reload(), 1000); // Reload page after 1 second
+                }
+
+                setTimeout(() => $(this).css("top", "0px"), 2500);
+            });
+
+            $("button").on("click", function () {
+                if ($(".cup.shuffling").length) return;
+
+                showAlert("Thank you for submitting your request.");
+                setTimeout(() => $(".cups_container").addClass("hide"), 2500);
+            });
+
+            setTimeout(() => {
+                shuffleLoop(Math.floor(Math.random() * 10) + 4);
+            }, 250);
+        });
+    </script>
+</body>
+</html>
