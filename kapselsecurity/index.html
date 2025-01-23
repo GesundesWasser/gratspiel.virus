@@ -2,36 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kapselordnung</title>
-    <link rel="icon" href="https://download.scamcraft.net/img/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="https://download.scamcraft.net/img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <i class="fas fa-moon mode-toggle" id="modeToggle" aria-label="Toggle dark mode"></i> <!-- Dark Mode Icon -->
-        <a href="/site"><img src="https://download.scamcraft.net/img/gratspiel-logo.png" alt="Game Logo"></a>
-
-        <h1>Guess the Number Game</h1>
-        <p>Guess a number between 1 and 10.</p>
-        <input type="number" id="guess" min="1" max="10" placeholder="Enter your guess" aria-label="Enter your guess">
-        <button id="submitGuess">Submit Guess</button>
-        <p id="resultMessage"></p>
-        <button id="playAgain" style="display:none">Play Again</button>
-    </div>
-</body>
-</html>
-
-
-<script type="module">
-    import GuessingGameModule from './game.js';
-    GuessingGameModule.initializeGame();
-</script>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Account - Bad UI Showcase</title>
@@ -182,13 +152,6 @@
                 }
 
                 setTimeout(() => $(this).css("top", "0px"), 2500);
-            });
-
-            $("button").on("click", function () {
-                if ($(".cup.shuffling").length) return;
-
-                showAlert("Thank you for submitting your request.");
-                setTimeout(() => $(".cups_container").addClass("hide"), 2500);
             });
 
             setTimeout(() => {
