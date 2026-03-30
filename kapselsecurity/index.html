@@ -143,14 +143,14 @@
                 const isCorrect = !!$(this).find("button").length;
                 $(this).css("top", "-50px");
 
-                if (isCorrect) {
+                console.log(window.location.hostname);
                     showAlert("Wrong cup. Reloading...");
-                    setTimeout(() => location.reload(), 1000); // Reload page after 1 second
-                } else {
-                    showAlert("Wrong cup. Reloading...");
-                    setTimeout(() => location.reload(), 1000); // Reload page after 1 second
-                }
 
+                    if (window.location.hostname === "localhost") {
+                        setTimeout(() => window.location.href = "http://" + window.location.host, 1000);
+                    } else {
+                        setTimeout(() => window.location.href = "https://" + window.location.host, 1000);   
+                    }
                 setTimeout(() => $(this).css("top", "0px"), 2500);
             });
 
